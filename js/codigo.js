@@ -29,8 +29,8 @@ var turno = 1;
 //==============JUEGO================
 //===================================
 
-var juego = 0; //Si está en 0, entramos al bucle de juego.
-while (juego == 0) {
+var juego = true; //Si está en 0, entramos al bucle de juego.
+while (juego == true) {
 
 	while ( (!(victoriasUsuario >= 3)) && (!(victoriasMaquina >= 3)) ) { //Si llevas entre 3 victorias y 3 derrotas, puedes jugar.
 
@@ -79,18 +79,28 @@ while (juego == 0) {
 			alert("Turno " + turno + ".\n\nVictorias: " +victoriasUsuario + "\nDerrotas " + victoriasMaquina);
 			turno++; //Siguiente turno
 		}
-		else { //Si el usuario no elige una opción válida
-			alert("Opción no válida.\nPor favor, elija un valor entre el 0 y el 2.");
+		else if (opcionUsuario > 3) { //Si eliges un valor no válido como "3"
+				alert("Opción no válida.\nPor favor, elija un valor entre el 0 y el 2.");
+			}
+		else { //Si el usuario elige cancelar, sales del ciclo
+			opcionUsuario = undefined;
+			break;
 		}
 		//VUELVE A ELECCIONES HASTA QUE HAYA 3 VICTORIAS O 3 DERROTAS
 
 	} //FIN DEL BUCLE
 
 
+	//========================CANCELAR===========================
+		if (opcionUsuario == undefined) { //Si has elegido "cancelar", sales del juego
+			break;
+		}
+
+
 	//========================RESULTADOS===========================
 	
 	//Solo pongo estas variables a 0 si es la primera vez que se juega
-	if ( (!(victoriasTotales > 0) || (derrotasTotales > 0)) ) {
+	if ( (!(victoriasTotales > 0)) && (!(derrotasTotales > 0)) ) {
 		var victoriasTotales = 0;
 		var derrotasTotales = 0;
 	}
@@ -122,6 +132,13 @@ while (juego == 0) {
 	victoriasUsuario = 0;
 	victoriasMaquina = 0;
 	
-	juego = prompt("¿Quieres volver a jugar?\n\nSí: 0\n\tNo: 1", 0);
+	var volverAJugar = confirm("Pulsa OK para volver a jugar.");
+	if (volverAJugar == true) {
+		juego = true;
+	}
+	else {
+		juego = false;
+	}
 	turno = 1;
+	
 } //FIN DEL BUCLE DE JUEGO
